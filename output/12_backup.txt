@@ -1,0 +1,5 @@
+[2026-11-20 12:10:47] backup start: db=library -> ./backups/library_20261120_121047.archive.gz
+2026-11-20T12:10:47.941+0000	done dumping library.users (10 documents)
+2026-11-20T12:10:47.941+0000	done dumping library.books_history (4 documents)
+2026-11-20T12:10:47.941+0000	done dumping library.sessions (0 documents)
+[2026-11-20 12:10:47] backup ok: 8.0K, sha256 збережено

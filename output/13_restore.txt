@@ -1,0 +1,61 @@
+library_20261120_121047.archive.gz: OK
+2026-11-20T12:10:47.991+0000	preparing collections to restore from
+2026-11-20T12:10:48.001+0000	reading metadata for library_restore.available_books from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.books_with_authors from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.users from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.libraries from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.authors from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.books from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.books_history from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.005+0000	reading metadata for library_restore.sessions from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.036+0000	restoring library_restore.available_books from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.047+0000	finished restoring library_restore.available_books (0 documents, 0 failures)
+2026-11-20T12:10:48.052+0000	restoring library_restore.books_with_authors from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.071+0000	finished restoring library_restore.books_with_authors (0 documents, 0 failures)
+2026-11-20T12:10:48.079+0000	restoring library_restore.authors from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.091+0000	finished restoring library_restore.authors (10 documents, 0 failures)
+2026-11-20T12:10:48.113+0000	restoring library_restore.libraries from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.125+0000	finished restoring library_restore.libraries (8 documents, 0 failures)
+2026-11-20T12:10:48.143+0000	restoring library_restore.books from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.154+0000	finished restoring library_restore.books (10 documents, 0 failures)
+2026-11-20T12:10:48.171+0000	restoring library_restore.users from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.182+0000	finished restoring library_restore.users (10 documents, 0 failures)
+2026-11-20T12:10:48.201+0000	restoring library_restore.books_history from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.212+0000	finished restoring library_restore.books_history (4 documents, 0 failures)
+2026-11-20T12:10:48.229+0000	restoring library_restore.sessions from archive 'backups/library_20261120_121047.archive.gz'
+2026-11-20T12:10:48.262+0000	finished restoring library_restore.sessions (0 documents, 0 failures)
+2026-11-20T12:10:48.263+0000	no indexes to restore for collection library_restore.users
+2026-11-20T12:10:48.263+0000	restoring indexes for collection library_restore.libraries from metadata
+2026-11-20T12:10:48.263+0000	index: &idx.IndexDocument{Options:primitive.M{"2dsphereIndexVersion":3, "name":"location_2dsphere", "v":2}, Key:primitive.D{primitive.E{Key:"location", Value:"2dsphere"}}, PartialFilterExpression:primitive.D(nil)}
+2026-11-20T12:10:48.263+0000	no indexes to restore for collection library_restore.authors
+2026-11-20T12:10:48.263+0000	restoring indexes for collection library_restore.books from metadata
+2026-11-20T12:10:48.263+0000	index: &idx.IndexDocument{Options:primitive.M{"name":"isbn_1", "unique":true, "v":2}, Key:primitive.D{primitive.E{Key:"isbn", Value:1}}, PartialFilterExpression:primitive.D{primitive.E{Key:"isbn", Value:primitive.D{primitive.E{Key:"$type", Value:"string"}}}}}
+2026-11-20T12:10:48.263+0000	index: &idx.IndexDocument{Options:primitive.M{"default_language":"none", "language_override":"language", "name":"text_uk_stems", "textIndexVersion":3, "v":2, "weights":primitive.M{"search_stems":1}}, Key:primitive.D{primitive.E{Key:"_fts", Value:"text"}, primitive.E{Key:"_ftsx", Value:1}}, PartialFilterExpression:primitive.D(nil)}
+2026-11-20T12:10:48.263+0000	index: &idx.IndexDocument{Options:primitive.M{"name":"title_1", "v":2}, Key:primitive.D{primitive.E{Key:"title", Value:1}}, PartialFilterExpression:primitive.D(nil)}
+2026-11-20T12:10:48.263+0000	index: &idx.IndexDocument{Options:primitive.M{"name":"author_1_publication_year_-1", "v":2}, Key:primitive.D{primitive.E{Key:"author", Value:1}, primitive.E{Key:"publication_year", Value:-1}}, PartialFilterExpression:primitive.D(nil)}
+2026-11-20T12:10:48.263+0000	restoring indexes for collection library_restore.books_history from metadata
+2026-11-20T12:10:48.263+0000	index: &idx.IndexDocument{Options:primitive.M{"name":"book_id_1_version_-1", "unique":true, "v":2}, Key:primitive.D{primitive.E{Key:"book_id", Value:1}, primitive.E{Key:"version", Value:-1}}, PartialFilterExpression:primitive.D(nil)}
+2026-11-20T12:10:48.264+0000	restoring indexes for collection library_restore.sessions from metadata
+2026-11-20T12:10:48.264+0000	index: &idx.IndexDocument{Options:primitive.M{"expireAfterSeconds":3600, "name":"created_at_1", "v":2}, Key:primitive.D{primitive.E{Key:"created_at", Value:1}}, PartialFilterExpression:primitive.D(nil)}
+2026-11-20T12:10:48.400+0000	no indexes to restore for collection library_restore.available_books
+2026-11-20T12:10:48.400+0000	no indexes to restore for collection library_restore.books_with_authors
+2026-11-20T12:10:48.450+0000	42 document(s) restored successfully. 0 document(s) failed to restore.
+[
+  'books: 10 / 10',
+  'authors: 10 / 10',
+  'users: 10 / 10',
+  'books_history: 4 / 4',
+  'libraries: 8 / 8'
+]
+[
+  'authors [collection]',
+  'available_books [view]',
+  'books [collection]',
+  'books_history [collection]',
+  'books_with_authors [view]',
+  'libraries [collection]',
+  'sessions [collection]',
+  'system.views [collection]',
+  'users [collection]'
+]
+{ ok: 1, dropped: 'library_restore' }

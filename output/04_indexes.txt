@@ -1,0 +1,135 @@
+===== books: без індексів =====
+
+// explain: author = 'Іван Франко'
+{
+  plan: 'COLLSCAN',
+  nReturned: 2,
+  totalKeysExamined: 0,
+  totalDocsExamined: 10,
+  executionTimeMillis: 0
+}
+
+// Поточні індекси
+[
+  '_id_'
+]
+
+===== Три індекси для books =====
+
+// 1) простий {title:1}
+title_1
+
+// 2) складений {author:1, publication_year:-1}
+author_1_publication_year_-1
+
+// 3) унікальний {isbn:1} (лише для рядків)
+isbn_1
+
+// getIndexes
+[
+  '_id_',
+  'title_1',
+  'author_1_publication_year_-1',
+  'isbn_1'
+]
+
+// explain після індексу: author = 'Іван Франко'
+{
+  plan: 'FETCH -> IXSCAN(author_1_publication_year_-1)',
+  nReturned: 2,
+  totalKeysExamined: 2,
+  totalDocsExamined: 2,
+  executionTimeMillis: 0
+}
+
+// перевірка унікальності isbn (очікується E11000)
+E11000 duplicate key, code 11000
+
+===== books_perf: 200 000 документів =====
+
+// Документів у books_perf
+200000
+
+// БЕЗ індексів
+{
+  'author=': {
+    plan: 'COLLSCAN',
+    nReturned: 100,
+    totalKeysExamined: 0,
+    totalDocsExamined: 200000,
+    executionTimeMillis: 137
+  },
+  'isbn=': {
+    plan: 'COLLSCAN',
+    nReturned: 1,
+    totalKeysExamined: 0,
+    totalDocsExamined: 200000,
+    executionTimeMillis: 107
+  },
+  'author + year, sort': {
+    plan: 'SORT -> COLLSCAN',
+    nReturned: 54,
+    totalKeysExamined: 0,
+    totalDocsExamined: 200000,
+    executionTimeMillis: 81
+  },
+  'year>=2000 & pages<100': {
+    plan: 'COLLSCAN',
+    nReturned: 1410,
+    totalKeysExamined: 0,
+    totalDocsExamined: 200000,
+    executionTimeMillis: 91
+  }
+}
+
+// З індексами
+{
+  'author=': {
+    plan: 'FETCH -> IXSCAN(author_1)',
+    nReturned: 100,
+    totalKeysExamined: 100,
+    totalDocsExamined: 100,
+    executionTimeMillis: 6
+  },
+  'isbn=': {
+    plan: 'EXPRESS_IXSCAN(isbn_1)',
+    nReturned: 1,
+    totalKeysExamined: 1,
+    totalDocsExamined: 1,
+    executionTimeMillis: 1
+  },
+  'author + year, sort': {
+    plan: 'FETCH -> IXSCAN(author_1_publication_year_-1)',
+    nReturned: 54,
+    totalKeysExamined: 54,
+    totalDocsExamined: 54,
+    executionTimeMillis: 2
+  },
+  'year>=2000 & pages<100': {
+    plan: 'FETCH -> IXSCAN(publication_year_1_pages_1)',
+    nReturned: 1410,
+    totalKeysExamined: 1430,
+    totalDocsExamined: 1410,
+    executionTimeMillis: 4
+  }
+}
+
+// Середній час запиту, мс (30 запусків), без індексів
+{
+  'author=': 81.36666666666666,
+  'isbn=': 94.46666666666667,
+  'author+year sort': 106.56666666666666
+}
+
+// Середній час запиту, мс (30 запусків), з індексами
+{
+  'author=': 3,
+  'isbn=': 2.533333333333333,
+  'author+year sort': 2.6666666666666665
+}
+
+// Розмір колекції / індексів, МБ
+{
+  data: 46.9,
+  indexes: 12
+}

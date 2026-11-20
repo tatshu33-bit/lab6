@@ -1,0 +1,32 @@
+
+// Стан replica set
+[
+  '127.0.0.1:27017 PRIMARY',
+  '127.0.0.1:27018 SECONDARY (відставання 0 с)',
+  '127.0.0.1:27019 SECONDARY (відставання 0 с)'
+]
+
+// Запис з writeConcern {w: "majority"}
+true
+
+// Читання з вторинних вузлів (readPreference: secondary)
+порт 27018: books=10, replication_test=1
+порт 27019: books=10, replication_test=1
+
+// Запис на вторинному вузлі заборонено
+NotWritablePrimary
+
+// Відмовостійкість: step down поточного primary
+було PRIMARY: 127.0.0.1:27017
+команду replSetStepDown виконано
+стало PRIMARY: 127.0.0.1:27019
+запис після перемикання: true
+документів у replication_test: 2
+
+// Підсумковий стан
+[
+  '127.0.0.1:27017 PRIMARY',
+  '127.0.0.1:27018 SECONDARY',
+  '127.0.0.1:27019 SECONDARY'
+]
+true

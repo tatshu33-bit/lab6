@@ -1,0 +1,99 @@
+
+// 2dsphere-індекс
+location_2dsphere
+
+// $near: найближчі до Луцька, ≤ 150 км
+[
+  {
+    name: 'Центральна бібліотека, Луцьк'
+  },
+  {
+    name: 'Центральна бібліотека, Рівне'
+  },
+  {
+    name: 'Міська бібліотека, Ковель'
+  },
+  {
+    name: 'Центральна бібліотека, Львів'
+  }
+]
+
+// $geoNear (aggregation): відстань у км
+[
+  {
+    city: 'Луцьк',
+    dist_km: 0
+  },
+  {
+    city: 'Рівне',
+    dist_km: 67
+  },
+  {
+    city: 'Ковель',
+    dist_km: 67
+  },
+  {
+    city: 'Львів',
+    dist_km: 137
+  },
+  {
+    city: 'Київ',
+    dist_km: 369
+  }
+]
+
+// $geoWithin $centerSphere: радіус 200 км від Луцька
+[
+  {
+    city: 'Ковель'
+  },
+  {
+    city: 'Луцьк'
+  },
+  {
+    city: 'Рівне'
+  },
+  {
+    city: 'Львів'
+  }
+]
+
+// $geoWithin $geometry Polygon (прямокутник «захід України»)
+[
+  {
+    city: 'Ковель'
+  },
+  {
+    city: 'Луцьк'
+  },
+  {
+    city: 'Рівне'
+  },
+  {
+    city: 'Львів'
+  }
+]
+
+// explain $near (використання 2dsphere)
+{
+  plan: 'GEO_NEAR_2DSPHERE(location_2dsphere) -> FETCH -> IXSCAN(location_2dsphere)',
+  nReturned: 4,
+  totalKeysExamined: 63,
+  totalDocsExamined: 4,
+  executionTimeMillis: 4
+}
+
+===== TTL-індекс =====
+
+// Робочий TTL: сесії живуть 1 год
+created_at_1
+
+// Демо-TTL: 5 с
+created_at_1
+
+// Документів одразу після вставки
+2
+Чекаємо 75 с (фонова задача TTL запускається раз на 60 с)...
+
+// Документів після очікування
+0

@@ -1,1 +1,7 @@
 
+// Колекції бази library
+[
+  'users',
+  'authors',
+  'books'
+]

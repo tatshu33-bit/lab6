@@ -1,0 +1,586 @@
+===== 1. Складні запити ($and, $or, $in, $regex) =====
+
+// $and: після 1900 р. І доступні І pages < 130
+[
+  'Лісова пісня',
+  'Тіні забутих предків',
+  'Камінний хрест',
+  'Intermezzo'
+]
+
+// $or + $and: (Франко АБО Коцюбинський) І доступні
+[
+  'Каменярі',
+  'Тіні забутих предків',
+  'Intermezzo'
+]
+
+// $in: жанри поезія / драма / новела
+[
+  'Кобзар',
+  'Лісова пісня',
+  'Каменярі',
+  'Камінний хрест'
+]
+
+// $nin: видавництва не Фоліо
+[
+  'Кобзар',
+  'Лісова пісня',
+  'Захар Беркут',
+  'Тіні забутих предків',
+  'Каменярі',
+  'Intermezzo'
+]
+
+// $regex: назви, що починаються на 'К' (з урахуванням регістру)
+[
+  'Каменярі',
+  'Камінний хрест',
+  'Кобзар',
+  'Конотопська відьма'
+]
+
+// $regex (i): опис містить 'кохання'
+[
+  'Тіні забутих предків',
+  'Маруся',
+  'Intermezzo'
+]
+
+// $all: жанри романтизм І повість
+[
+  'Тіні забутих предків'
+]
+
+// $size: рівно 3 жанри
+[
+  'Лісова пісня',
+  'Тіні забутих предків'
+]
+
+// $elemMatch: рейтинг ≥ 4 від ivan_petrov
+[
+  'Кобзар',
+  'Лісова пісня'
+]
+
+// користувачі з Луцька або Рівного зі статусом active
+[
+  {
+    username: 'ivan_petrov',
+    address: {
+      city: 'Луцьк'
+    }
+  },
+  {
+    username: 'anna_melnyk',
+    address: {
+      city: 'Луцьк'
+    }
+  },
+  {
+    username: 'petro_kravchuk',
+    address: {
+      city: 'Луцьк'
+    }
+  }
+]
+
+===== 2. Агрегації =====
+
+// Кількість книг за жанрами ($unwind + $group + $sort)
+[
+  {
+    _id: 'повість',
+    count: 4
+  },
+  {
+    _id: 'реалізм',
+    count: 3
+  },
+  {
+    _id: 'романтизм',
+    count: 3
+  },
+  {
+    _id: 'поезія',
+    count: 2
+  },
+  {
+    _id: 'роман',
+    count: 2
+  },
+  {
+    _id: 'драма',
+    count: 1
+  },
+  {
+    _id: 'модернізм',
+    count: 1
+  },
+  {
+    _id: 'містика',
+    count: 1
+  },
+  {
+    _id: 'новела',
+    count: 1
+  },
+  {
+    _id: 'сентименталізм',
+    count: 1
+  },
+  {
+    _id: 'феєрія',
+    count: 1
+  },
+  {
+    _id: 'імпресіонізм',
+    count: 1
+  },
+  {
+    _id: 'історична проза',
+    count: 1
+  }
+]
+
+// Середня кількість сторінок за автором
+[
+  {
+    _id: 'Панас Мирний',
+    avg_pages: 384,
+    total_books: 1
+  },
+  {
+    _id: 'Тарас Шевченко',
+    avg_pages: 238,
+    total_books: 1
+  },
+  {
+    _id: 'Іван Франко',
+    avg_pages: 160,
+    total_books: 2
+  },
+  {
+    _id: 'Леся Українка',
+    avg_pages: 128,
+    total_books: 1
+  },
+  {
+    _id: "Григорій Квітка-Основ'яненко",
+    avg_pages: 104,
+    total_books: 2
+  },
+  {
+    _id: 'Михайло Коцюбинський',
+    avg_pages: 84,
+    total_books: 2
+  },
+  {
+    _id: 'Василь Стефаник',
+    avg_pages: 48,
+    total_books: 1
+  }
+]
+
+// Книги за століттями
+[
+  {
+    _id: 19,
+    books_count: 7,
+    authors: [
+      'Панас Мирний',
+      'Іван Франко',
+      'Василь Стефаник',
+      "Григорій Квітка-Основ'яненко",
+      'Тарас Шевченко'
+    ]
+  },
+  {
+    _id: 20,
+    books_count: 3,
+    authors: [
+      'Леся Українка',
+      'Михайло Коцюбинський'
+    ]
+  }
+]
+
+// Топ користувачів за кількістю взятих книг
+[
+  {
+    _id: ObjectId('6b0037ddac33cfe64b5dae92'),
+    username: 'olena_shevchuk',
+    borrowed_count: 3
+  },
+  {
+    _id: ObjectId('6b0037ddac33cfe64b5dae91'),
+    username: 'dmytro_bondar',
+    borrowed_count: 2
+  },
+  {
+    _id: ObjectId('6b0037ddac33cfe64b5dae8d'),
+    username: 'ivan_petrov',
+    borrowed_count: 2
+  },
+  {
+    _id: ObjectId('6b0037ddac33cfe64b5dae95'),
+    username: 'petro_kravchuk',
+    borrowed_count: 2
+  },
+  {
+    _id: ObjectId('6b0037ddac33cfe64b5dae90'),
+    username: 'anna_melnyk',
+    borrowed_count: 1
+  }
+]
+
+// Середній рейтинг книг ($unwind ratings)
+[
+  {
+    _id: 'Тіні забутих предків',
+    avg_score: 5,
+    votes: 2
+  },
+  {
+    _id: 'Лісова пісня',
+    avg_score: 4.5,
+    votes: 2
+  },
+  {
+    _id: 'Кобзар',
+    avg_score: 4.5,
+    votes: 2
+  },
+  {
+    _id: 'Intermezzo',
+    avg_score: 3,
+    votes: 1
+  }
+]
+
+// Жанри після 1900 р. (складний pipeline з прикладу)
+[
+  {
+    _id: 'повість',
+    count: 2,
+    avg_pages: 84,
+    books: [
+      'Тіні забутих предків',
+      'Intermezzo'
+    ]
+  },
+  {
+    _id: 'романтизм',
+    count: 2,
+    avg_pages: 112,
+    books: [
+      'Лісова пісня',
+      'Тіні забутих предків'
+    ]
+  },
+  {
+    _id: 'драма',
+    count: 1,
+    avg_pages: 128,
+    books: [
+      'Лісова пісня'
+    ]
+  },
+  {
+    _id: 'модернізм',
+    count: 1,
+    avg_pages: 96,
+    books: [
+      'Тіні забутих предків'
+    ]
+  },
+  {
+    _id: 'новела',
+    count: 1,
+    avg_pages: 48,
+    books: [
+      'Камінний хрест'
+    ]
+  }
+]
+
+// Статистика за видавництвами ($group + $min/$max)
+[
+  {
+    _id: 'Фоліо',
+    books: 4,
+    total_pages: 640,
+    first_year: 1834,
+    last_year: 1900
+  },
+  {
+    _id: 'Дніпро',
+    books: 3,
+    total_pages: 406,
+    first_year: 1840,
+    last_year: 1911
+  },
+  {
+    _id: 'Свічадо',
+    books: 2,
+    total_pages: 320,
+    first_year: 1878,
+    last_year: 1883
+  },
+  {
+    _id: 'А-БА-БА-ГА-ЛА-МА-ГА',
+    books: 1,
+    total_pages: 128,
+    first_year: 1911,
+    last_year: 1911
+  }
+]
+
+===== 3. Складені (compound) індекси — правило ESR на books_perf =====
+
+// без індексів
+{
+  plan: 'SORT -> COLLSCAN',
+  nReturned: 20,
+  totalKeysExamined: 0,
+  totalDocsExamined: 200000,
+  executionTimeMillis: 138
+}
+
+// одиночний {genres:1}: сортування в пам'яті
+{
+  plan: 'SORT -> FETCH -> IXSCAN(genres_1)',
+  nReturned: 20,
+  totalKeysExamined: 40000,
+  totalDocsExamined: 40000,
+  executionTimeMillis: 72
+}
+
+// compound {genres:1, available:1, rating:-1}
+{
+  plan: 'LIMIT -> FETCH -> IXSCAN(genres_1_available_1_rating_-1)',
+  nReturned: 20,
+  totalKeysExamined: 20,
+  totalDocsExamined: 20,
+  executionTimeMillis: 8
+}
+
+===== 4. Текстовий пошук =====
+
+// createIndex text(title, description), default_language none
+text_title_desc
+
+// $text: 'кохання Карпатах' (точні словоформи)
+[
+  'Тіні забутих предків',
+  'Intermezzo',
+  'Маруся'
+]
+
+// $text з оцінкою релевантності
+[
+  {
+    title: 'Intermezzo',
+    score: 1.25
+  },
+  {
+    title: 'Маруся',
+    score: 1.2
+  },
+  {
+    title: 'Тіні забутих предків',
+    score: 1.1666666666666667
+  },
+  {
+    title: 'Конотопська відьма',
+    score: 0.625
+  }
+]
+
+// $text: точна фраза у лапках
+[
+  'Тіні забутих предків'
+]
+
+// $text: 'повість' без слова 'кохання' (виключення через -)
+[
+  'Конотопська відьма'
+]
+
+// Обмеження: 'Карпати' не знаходить 'Карпатах' (без стемінгу)
+[]
+
+===== 5. $lookup =====
+
+// Книг без author_id
+0
+
+// books → authors ($lookup + $unwind)
+[
+  {
+    title: 'Каменярі',
+    publication_year: 1878,
+    author: 'Іван Франко',
+    born: 1856,
+    age_at_publication: 22
+  },
+  {
+    title: 'Кобзар',
+    publication_year: 1840,
+    author: 'Тарас Шевченко',
+    born: 1814,
+    age_at_publication: 26
+  },
+  {
+    title: 'Захар Беркут',
+    publication_year: 1883,
+    author: 'Іван Франко',
+    born: 1856,
+    age_at_publication: 27
+  },
+  {
+    title: 'Камінний хрест',
+    publication_year: 1900,
+    author: 'Василь Стефаник',
+    born: 1871,
+    age_at_publication: 29
+  },
+  {
+    title: 'Хіба ревуть воли, як ясла повні',
+    publication_year: 1880,
+    author: 'Панас Мирний',
+    born: 1849,
+    age_at_publication: 31
+  }
+]
+
+// authors → books (LEFT JOIN-подібно: автори без книг)
+[
+  {
+    name: 'Іван Франко',
+    books_count: 2
+  },
+  {
+    name: "Григорій Квітка-Основ'яненко",
+    books_count: 2
+  },
+  {
+    name: 'Михайло Коцюбинський',
+    books_count: 2
+  },
+  {
+    name: 'Василь Стефаник',
+    books_count: 1
+  },
+  {
+    name: 'Леся Українка',
+    books_count: 1
+  },
+  {
+    name: 'Панас Мирний',
+    books_count: 1
+  },
+  {
+    name: 'Тарас Шевченко',
+    books_count: 1
+  },
+  {
+    name: 'Іван Нечуй-Левицький',
+    books_count: 0
+  },
+  {
+    name: 'Марко Вовчок',
+    books_count: 0
+  },
+  {
+    name: 'Ольга Кобилянська',
+    books_count: 0
+  }
+]
+
+// $lookup з pipeline: користувачі та жанри їхніх книг
+[
+  {
+    username: 'ivan_petrov',
+    genres: [
+      'модернізм',
+      'повість',
+      'поезія',
+      'романтизм'
+    ]
+  },
+  {
+    username: 'maria_kovalenko',
+    genres: [
+      'драма',
+      'романтизм',
+      'феєрія'
+    ]
+  },
+  {
+    username: 'anna_melnyk',
+    genres: [
+      'реалізм',
+      'роман'
+    ]
+  }
+]
+
+===== 6. Представлення (view) =====
+
+// available_books: до 1900 р.
+[
+  {
+    title: 'Хіба ревуть воли, як ясла повні',
+    author: 'Панас Мирний',
+    publication_year: 1880,
+    pages: 384
+  },
+  {
+    title: 'Каменярі',
+    author: 'Іван Франко',
+    publication_year: 1878,
+    pages: 64
+  },
+  {
+    title: 'Конотопська відьма',
+    author: "Григорій Квітка-Основ'яненко",
+    publication_year: 1837,
+    pages: 112
+  }
+]
+
+// books_with_authors (3 шт.)
+[
+  {
+    title: 'Кобзар',
+    publication_year: 1840,
+    author: 'Тарас Шевченко',
+    author_birth_year: 1814
+  },
+  {
+    title: 'Лісова пісня',
+    publication_year: 1911,
+    author: 'Леся Українка',
+    author_birth_year: 1871
+  },
+  {
+    title: 'Захар Беркут',
+    publication_year: 1883,
+    author: 'Іван Франко',
+    author_birth_year: 1856
+  }
+]
+
+// Список колекцій і view
+[
+  'authors [collection]',
+  'available_books [view]',
+  'books [collection]',
+  'books_perf [collection]',
+  'books_with_authors [view]',
+  'system.views [collection]',
+  'users [collection]'
+]

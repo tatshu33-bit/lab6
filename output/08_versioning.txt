@@ -1,0 +1,90 @@
+
+// Поточна версія Кобзаря
+{
+  title: 'Кобзар',
+  pages: 240,
+  description: 'Збірка поезій Тараса Шевченка (повне видання)',
+  publisher: {
+    name: 'Наукова думка'
+  },
+  version: 4
+}
+
+// Історія змін
+[
+  {
+    version: 1,
+    changed_by: 'admin',
+    comment: 'уточнено кількість сторінок'
+  },
+  {
+    version: 2,
+    changed_by: 'librarian',
+    comment: 'новий опис'
+  },
+  {
+    version: 3,
+    changed_by: 'librarian',
+    comment: 'змінено видавця'
+  }
+]
+
+// Diff v1 → v2
+{
+  pages: {
+    from: 238,
+    to: 240
+  },
+  available: {
+    from: false,
+    to: true
+  }
+}
+
+// Diff v3 → поточна
+{
+  publisher: {
+    from: {
+      name: 'Дніпро',
+      city: 'Київ'
+    },
+    to: {
+      name: 'Наукова думка',
+      city: 'Київ'
+    }
+  }
+}
+
+// Конфлікт версій блокується (оновлення зі старою version)
+matchedCount=0
+
+// Після відкату до v1
+{
+  title: 'Кобзар',
+  pages: 238,
+  description: 'Збірка віршів Тараса Шевченка',
+  publisher: {
+    name: 'Дніпро'
+  },
+  version: 5
+}
+
+// Історія після відкату
+[
+  {
+    version: 1,
+    comment: 'уточнено кількість сторінок'
+  },
+  {
+    version: 2,
+    comment: 'новий опис'
+  },
+  {
+    version: 3,
+    comment: 'змінено видавця'
+  },
+  {
+    version: 4,
+    comment: 'перед відкатом до v1'
+  }
+]

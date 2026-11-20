@@ -1,0 +1,38 @@
+
+// Вставка 200 000 документів, мс (вбудований / посилання)
+{
+  embedded: 10440,
+  referenced: 8524
+}
+
+// Розмір даних, МБ
+{
+  embedded: 72,
+  referenced_books: 28.9,
+  referenced_authors: 0.45
+}
+
+// Читання: 100 книг одного автора разом з даними автора, середній час, мс
+{
+  embedded_find: 3.47,
+  referenced_lookup: 4.69
+}
+
+// Читання: тільки книги (без даних автора), мс
+{
+  embedded_find: 1.98,
+  referenced_find: 3.35
+}
+
+// Запис: змінити ім'я автора, середній час, мс
+{
+  embedded_updateMany_100_docs: 118.46,
+  referenced_updateOne_1_doc: 11.02
+}
+
+// Аналітика (підрахунок книг за національністю автора по всіх 200 000 книг), мс
+{
+  embedded: 756,
+  referenced_lookup: 4015,
+  same_result: true
+}

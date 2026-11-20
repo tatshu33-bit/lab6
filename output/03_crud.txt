@@ -1,0 +1,237 @@
+===== CREATE =====
+
+// insertOne
+{
+  acknowledged: true,
+  insertedId: ObjectId('6b0037dfae340ab7ba39dfec')
+}
+
+// insertMany (2 тимчасові книги)
+{
+  '0': ObjectId('6b0037dfae340ab7ba39dfed'),
+  '1': ObjectId('6b0037dfae340ab7ba39dfee')
+}
+
+===== READ =====
+
+// available:true (назви)
+[
+  {
+    title: 'Кобзар'
+  },
+  {
+    title: 'Лісова пісня'
+  },
+  {
+    title: 'Тіні забутих предків'
+  },
+  {
+    title: 'Хіба ревуть воли, як ясла повні'
+  },
+  {
+    title: 'Каменярі'
+  },
+  {
+    title: 'Конотопська відьма'
+  },
+  {
+    title: 'Камінний хрест'
+  },
+  {
+    title: 'Intermezzo'
+  },
+  {
+    title: 'Тестова книга'
+  }
+]
+
+// автор = Іван Франко
+[
+  {
+    title: 'Захар Беркут'
+  },
+  {
+    title: 'Каменярі'
+  }
+]
+
+// pages > 100 (порівняння)
+[
+  {
+    title: 'Кобзар',
+    pages: 238
+  },
+  {
+    title: 'Лісова пісня',
+    pages: 128
+  },
+  {
+    title: 'Захар Беркут',
+    pages: 256
+  },
+  {
+    title: 'Хіба ревуть воли, як ясла повні',
+    pages: 384
+  },
+  {
+    title: 'Конотопська відьма',
+    pages: 112
+  }
+]
+
+// genres = 'поезія' (елемент масиву)
+[
+  {
+    title: 'Кобзар'
+  },
+  {
+    title: 'Каменярі'
+  }
+]
+
+// $or: Шевченко або романтизм
+[
+  {
+    title: 'Кобзар'
+  },
+  {
+    title: 'Лісова пісня'
+  },
+  {
+    title: 'Тіні забутих предків'
+  }
+]
+
+// $regex /Лісова/i
+[
+  {
+    title: 'Лісова пісня'
+  }
+]
+
+// вкладений документ: publisher.city = 'Львів'
+[
+  {
+    title: 'Захар Беркут',
+    publisher: {
+      name: 'Свічадо'
+    }
+  },
+  {
+    title: 'Каменярі',
+    publisher: {
+      name: 'Свічадо'
+    }
+  }
+]
+
+// sort по року (спадання), limit 3
+[
+  {
+    title: 'Тестова книга',
+    publication_year: 2020
+  },
+  {
+    title: 'Тіні забутих предків',
+    publication_year: 1911
+  },
+  {
+    title: 'Лісова пісня',
+    publication_year: 1911
+  }
+]
+
+// genres = 'роман', limit 3
+[
+  {
+    title: 'Захар Беркут'
+  },
+  {
+    title: 'Хіба ревуть воли, як ясла повні'
+  }
+]
+
+===== UPDATE =====
+
+// updateOne: Кобзар -> available:false
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+// $push рейтингу (Лісова пісня)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+// updateMany: category для книг до 1900 р.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+
+// $inc borrowed_count
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+// $unset (поле, якого немає)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+// replaceOne тестової книги (повна заміна)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+===== DELETE =====
+
+// deleteOne (немає такої книги)
+{
+  acknowledged: true,
+  deletedCount: 0
+}
+
+// deleteMany({temp:true, available:false})
+{
+  acknowledged: true,
+  deletedCount: 2
+}
+
+// deleteOne (тестова, temp:true)
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+
+// deleteOne користувача suspended + old_user
+{
+  acknowledged: true,
+  deletedCount: 0
+}
+
+// Книг у колекції після очищення
+10
